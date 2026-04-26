@@ -11,13 +11,13 @@
 ---
 
 ## 스크립트 경로
-모든 스크립트는 `눌림목매매` 폴더 기준:
+모든 스크립트는 현재 프로젝트 내 `scripts/` 폴더에 위치한다:
 ```
-../눌림목매매/
-├── 중기유망종목/scripts/naver_finance.py       ← 시황·섹터·종목 데이터
-├── 단기유망종목/.agent/scratch/fetch_top_stocks.py  ← 단기 수급 스크리닝
-├── 장기유망종목/skills/genesis-quant-skill/scripts/gene-scan.py  ← 장기 퀀트 스캔
-└── workflows/skills/pullback-scorer/pullback_score.py  ← 눌림목 건강도 스코어러
+눌림목매매2/scripts/
+├── naver_finance.py       ← 시황·섹터·종목 데이터
+├── fetch_top_stocks.py    ← 단기 수급 스크리닝
+├── gene-scan.py           ← 장기 퀀트 스캔
+└── pullback_score.py      ← 눌림목 건강도 스코어러
 ```
 
 ---
@@ -26,7 +26,7 @@
 
 ### STEP 1. 시황 판단
 ```bash
-python "../눌림목매매/중기유망종목/scripts/naver_finance.py" market
+python scripts/naver_finance.py market
 ```
 - **공격**: 외인+기관 쌍끌이 + 거래대금 20조↑
 - **중립**: 수급 혼조
@@ -34,8 +34,8 @@ python "../눌림목매매/중기유망종목/scripts/naver_finance.py" market
 
 ### STEP 2. 대세섹터 확정
 ```bash
-python "../눌림목매매/중기유망종목/scripts/naver_finance.py" sector
-python "../눌림목매매/중기유망종목/scripts/naver_finance.py" theme
+python scripts/naver_finance.py sector
+python scripts/naver_finance.py theme
 ```
 - **고정 4대**: AI인프라 / 전력설비 / 원전·SMR / 방산
 - **동적 추가**: 당일 업종 상위 + 외인·기관 동반 유입 섹터
@@ -44,7 +44,7 @@ python "../눌림목매매/중기유망종목/scripts/naver_finance.py" theme
 
 #### 3-A. 단기 후보 (5~7종목)
 ```bash
-python "../눌림목매매/단기유망종목/.agent/scratch/fetch_top_stocks.py"
+python scripts/fetch_top_stocks.py
 ```
 > ⚠️ 출력 첫 줄 날짜 확인 필수 — 오늘 날짜와 불일치 시 데이터 사용 금지
 
@@ -52,24 +52,21 @@ python "../눌림목매매/단기유망종목/.agent/scratch/fetch_top_stocks.py
 
 #### 3-B. 중기 후보 (5~7종목)
 ```bash
-python "../눌림목매매/중기유망종목/scripts/naver_finance.py" screen <업종번호>
-python "../눌림목매매/중기유망종목/scripts/naver_finance.py" all <종목코드>
+python scripts/naver_finance.py screen <업종번호>
+python scripts/naver_finance.py all <종목코드>
 ```
 필터: 시총 500억↑ / ROE 10%↑ / 부채 150%↓ / 분기 영업흑자 / 스코어카드 14점↑
 
 #### 3-C. 장기 후보 (5~8종목)
 ```bash
-cd "../눌림목매매/장기유망종목"
-python -X utf8 skills/genesis-quant-skill/scripts/gene-scan.py --sector <섹터명> --top 20
-python -X utf8 skills/genesis-quant-skill/scripts/gene-scan.py --tickers <코드1> <코드2> --detail
-cd -
+python -X utf8 scripts/gene-scan.py --sector <섹터명> --top 20
+python -X utf8 scripts/gene-scan.py --tickers <코드1> <코드2> --detail
 ```
 필터: 3년 매출·영업이익 우상향 / ROE 15%↑ / 부채 200%↓ / Moat 검증
 
 ### STEP 4. 눌림목 건강도 스코어링
 ```bash
-python "../눌림목매매/workflows/skills/pullback-scorer/pullback_score.py" \
-    <단기코드들> <중기코드들> <장기코드들> --json
+python scripts/pullback_score.py <단기코드들> <중기코드들> <장기코드들> --json
 ```
 
 **등급 기준**:
@@ -103,7 +100,7 @@ python "../눌림목매매/workflows/skills/pullback-scorer/pullback_score.py" \
 
 ### STEP 6. GitHub 푸시
 
-리포트를 `workflows/reports/YYYYMMDD_발굴리포트.md` 에 저장한 뒤, 아래 명령을 현재 작업 폴더(`눌림목매매2/`)에서 실행한다:
+리포트를 `workflows/reports/YYYYMMDD_발굴리포트.md` 에 저장한 뒤:
 
 ```bash
 git add workflows/reports/YYYYMMDD_발굴리포트.md
