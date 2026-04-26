@@ -54,6 +54,25 @@ agents/report-agent.md 파일을 Read한다.
 
 ---
 
+## GitHub 동기화 원칙
+
+**저장소**: `https://github.com/pwman111-debuge/mullimmokmaemae2` (remote: `origin`)
+
+이 레포의 파일이 수정·추가된 경우, 작업 완료 즉시 아래 명령으로 푸시한다:
+
+```bash
+git add <수정된 파일>
+git commit -m "feat/fix: 변경 내용 요약"
+git push origin main
+```
+
+대상 파일:
+- `CLAUDE.md`
+- `agents/` 내 모든 파일
+- `workflows/reports/` 발굴 리포트
+
+---
+
 ## 운영 원칙
 
 - 데이터는 네이버 증권 및 GitHub 리포트에서만 읽는다 — 추정값·기억값 금지
