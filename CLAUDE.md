@@ -60,6 +60,7 @@ git push origin main
 대상 파일:
 - `CLAUDE.md`
 - `agents/` 내 모든 파일
+- `workflows/reviews/` 리뷰 리포트
 
 ---
 
