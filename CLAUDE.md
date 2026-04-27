@@ -47,14 +47,21 @@ agents/review-agent.md 파일을 Read한다.
 
 ## GitHub 동기화 원칙
 
-**저장소**: `https://github.com/pwman111-debuge/mullimmokmaemae2` (remote: `origin`)
+**저장소**: `https://github.com/pwman111-debuge/mullimmokmaemae2` (remote: `origin`)  
+**미러 저장소**: `https://github.com/pwman111-debuge/rullimmol-maemae2` (remote: `rullimmol`)
 
-이 레포의 파일이 수정·추가된 경우, 작업 완료 즉시 아래 명령으로 푸시한다:
+### 즉시 푸시 규칙 (예외 없음)
+
+아래 두 경우 모두 **작업 완료 즉시** 두 저장소에 푸시한다. 확인이나 별도 지시를 기다리지 않는다.
+
+**① 리뷰 리포트가 생성된 경우**
+**② 코드(에이전트 파일·설정 파일 포함)가 변경된 경우**
 
 ```bash
 git add <수정된 파일>
 git commit -m "feat/fix: 변경 내용 요약"
 git push origin main
+git push rullimmol main
 ```
 
 대상 파일:
